@@ -17,3 +17,7 @@ def movie_view(request):
   
 def success(request): 
     return HttpResponse('successfuly uploaded') 
+
+
+def homeview(request):
+	return render(request,'movie/index.html')

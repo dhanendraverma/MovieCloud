@@ -22,5 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # re_path(r'test/',views.call_script),
     # re_path('^$',),
-    re_path('', include('movie.urls')),
+    re_path('movie/', include('movie.urls')),
 ]
