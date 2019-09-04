@@ -1,9 +1,13 @@
 from django.http import HttpResponse 
 from django.shortcuts import render, redirect 
 from .forms import *
+from django.views.generic.edit import CreateView
+from movie.models import Movie
+from django.urls import reverse_lazy
 
-def movie_view(request): 
-  
+
+def movie_view(request):
+
     if request.method == 'POST': 
         form = movieForm(request.POST, request.FILES) 
   
@@ -20,4 +24,13 @@ def success(request):
 
 
 def homeview(request):
-	return render(request,'movie/index.html')
+    if request.method == 'POST':
+        print("sdf")
+        return redirect("/")
+    return render(request,'movie/movies.html')
+
+
+class MovieCreatView(CreateView):
+    model = Movie
+    fields = ['movie_name','poster','word_cloud','tweets']
+    template_name = 'movie/create.html'

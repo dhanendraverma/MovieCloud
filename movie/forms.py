@@ -3,5 +3,5 @@ from . import models
 
 class movieForm(forms.ModelForm):
 	class Meta:
-		model =  models.movie
+		model =  models.Movie
 		fields = '__all__'

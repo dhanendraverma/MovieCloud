@@ -36,6 +36,11 @@ i.fab.fa-mixcloud{
     object-fit: cover;
 }
 
+div.card{
+    border: 0;
+}
+
 div.card:hover {
 	    box-shadow: 0px 0 6px 2px rgba(37, 35, 35, 0.9);
 }
+
