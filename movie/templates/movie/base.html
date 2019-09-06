@@ -23,11 +23,13 @@
 
 	<!-- fontswesome -->
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css">
+
+  <script type="text/javascript" src="{% static 'movie/modal.js' %}"></script>
   
 </head>
 <body>
 	<!-- navbar -->
-	<nav class="navbar navbar-expand-lg navbar navbar-dark">
+	<nav class="navbar fixed-top navbar-expand-lg navbar-dark">
     <i class="fab fa-mixcloud"></i>
     <a class="navbar-brand" href="#">MovieCloud</a>
     
@@ -62,12 +64,9 @@
     </div>
   </nav>
   <!-- navbar end -->
-
   {% block content %}
 
   {% endblock %}
-
-
 
 </body>
 </html>

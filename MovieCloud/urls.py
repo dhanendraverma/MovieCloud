@@ -25,4 +25,5 @@ urlpatterns = [
     # re_path(r'test/',views.call_script),
     re_path('movie/', include('movie.urls')),
     re_path('^$', include('movie.urls')),
+    # re_path('in$', include('insights.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
