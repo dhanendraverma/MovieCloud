@@ -1,13 +1,14 @@
-
+/*body styling*/
 body {
-	background-image: linear-gradient(to right bottom, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ed, #78b4f5, #67c0fa, #4cd1ff, #34e1ff, #35f1fe, #53fff4);
-  /*  height: 100%;
+    background-image: linear-gradient(to right bottom, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ed, #78b4f5, #67c0fa, #4cd1ff, #34e1ff, #35f1fe, #53fff4);
+    /*  height: 100%;
     margin: 0;*/
     background-repeat: no-repeat;
     background-attachment: fixed;
     font-family: 'Livvic', sans-serif;
 }
 
+/*navigation bar styling*/
 nav.navbar.navbar-expand-lg.navbar-dark{
 	background-color: rgba(255,255,255,0.3);
 }
@@ -26,11 +27,12 @@ i.fab.fa-mixcloud{
     color: white;
 }
 
-#cardContainer{
-	margin-top: 30px;
+/*card styling*/
+div#cardContainer{
+	margin-top: 15vw;
 }
 
-.card-img-top {
+div.card-img-top {
     width: 100%;
     height: 20vw;
     object-fit: cover;
@@ -38,7 +40,7 @@ i.fab.fa-mixcloud{
 
 div.card{
     border: 0;
-}
+  }
 
 div.card:hover {
 	    box-shadow: 0px 0 6px 2px rgba(37, 35, 35, 0.9);
@@ -46,4 +48,156 @@ div.card:hover {
 
 div#carddiv{
     margin-bottom: 6vw;
+}
+
+/*modal styling*/
+* {
+  box-sizing:border-box;
+}
+
+/*html,body {
+  min-height:100%;
+  height:100%;
+  background-image:url(http://theartmad.com/wp-content/uploads/Dark-Grey-Texture-Wallpaper-5.jpg);
+  background-size:cover;
+  background-position:top center;
+  font-family:helvetica neue, helvetica, arial, sans-serif;
+  font-weight:200;
+  &.modal-active {
+    overflow: hidden;
+  }
+}*/
+
+#modal-container {
+  position:fixed;
+  display:table;
+  height:100%;
+  width:100%;
+  top:0;
+  left:0;
+  transform:scale(0);
+  z-index:1;
+  &.four {
+    z-index:0;
+    transform:scale(1);
+    .modal-background {
+      background:rgba(0,0,0,.7);
+      .modal {
+        animation: blowUpModal .5s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
+      }
+    }
+    + .content {
+      z-index:1;
+      animation:blowUpContent .5s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
+    }
+    &.out {
+      .modal-background {
+        .modal {
+          animation: blowUpModalTwo .5s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
+        }
+      }
+      + .content {
+        animation: blowUpContentTwo .5s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
+      }
+    }
+  }
+  .modal-background {
+    display:table-cell;
+    background:rgba(0,0,0,.8);
+    text-align:center;
+    vertical-align:middle;
+    .modal {
+      background:white;
+      padding:50px;
+      display:inline-block;
+      border-radius:3px;
+      font-weight:300;
+      position:relative;
+      h2 {
+        font-size:25px;
+        line-height:25px;
+        margin-bottom:15px;
+      }
+      p {
+        font-size:18px;
+        line-height:22px;
+      }
+      .modal-svg {
+        position:absolute;
+        top:0;
+        left:0;
+        height:100%;
+        width:100%;
+        border-radius:3px;
+        rect {
+          stroke: #fff;
+          stroke-width: 2px;
+          stroke-dasharray: 778;
+          stroke-dashoffset: 778;
+        }
+      }
+    }
+  }
+}
+
+.content {
+  min-height:100%;
+  height:100%;
+  background:white;
+  position:relative;
+  z-index:0;
+  
+}
+
+h1.content {
+    padding:75px 0 30px 0;
+    text-align:center;
+    font-size:30px;
+    line-height:30px;
+  }
+
+/*animation keyframes*/
+@keyframes blowUpModal {
+  0% {
+    transform:scale(0);
+  }
+  100% {
+    transform:scale(1);
+  }
+}
+
+@keyframes blowUpModalTwo {
+  0% {
+    transform:scale(1);
+    opacity:1;
+  }
+  100% {
+    transform:scale(0);
+    opacity:0;
+  }
+}
+
+@keyframes blowUpContentTwo {
+  0% {
+    transform:scale(2);
+    opacity:0;
+  }
+  100% {
+    transform:scale(1);
+    opacity:1;
+  }
+}
+
+@keyframes blowUpContent {
+  0% {
+    transform:scale(1);
+    opacity:1;
+  }
+  99.9% {
+    transform:scale(2);
+    opacity:0;
+  }
+  100% {
+    transform:scale(0);
+  }
 }

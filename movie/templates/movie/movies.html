@@ -1,8 +1,21 @@
-{% extends 'base.html' %}
+{% extends 'movie/base.html' %}
 
 {% block content %}
-<!-- movie cards -->
+<!-- wordcloud modal -->
+<div id="modal-container">
+	<div class="modal-background">
+    <div class="modal">
+    	<h2>I'm a Modal</h2>
+      <p>Hear me roar.</p>
+      <svg class="modal-svg" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" preserveAspectRatio="none">
+      	<rect x="0" y="0" fill="none" width="226" height="162" rx="3" ry="3"></rect>
+      </svg>
+    </div>
+  </div>
+</div>
+<!-- end of modal -->
 
+<!-- movie cards -->
 <div class="container" id="cardContainer">
 	<div class="row">
 	{% for movie in movie_list %} <!-- iterating through the movies from DB -->
@@ -12,12 +25,12 @@
 				<div class="card-body">
 		    	<h5 class="card-title">{{ movie.movie_name }}</h5>
 		  		<a href="/" class="btn btn-primary">Go somewhere</a>
+		  		<button id="four" class="btn btn-primary">Magic!</button>
 		  	</div>
 			</div>
 		</div>
 	{% endfor %}
 	</div>
 </div>
-
 <!-- enf of card -->
 {% endblock %}
