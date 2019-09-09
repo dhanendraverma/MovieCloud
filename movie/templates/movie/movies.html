@@ -26,7 +26,8 @@
 				<!--<img src="https://d1ydle56j7f53e.cloudfront.net/assets/gallery/movie/saaho-13497/misc-big/saaho-2pg" class="card-img-top" alt="{{ movie.movie_name }} poster">  !-->
 				<div class="card-body">
 		    	<h5 class="card-title">{{ movie.movie_name }}</h5>
-		  		<a href="/" class="btn btn-primary">Go somewhere</a>
+
+		  		<a href='/movie/show_{{ movie.movie_name|slice:"1:"}}/' class="btn btn-primary">Go somewhere</a>
 		  		<button id="four" class="btn btn-primary">Magic!</button>
 		  	</div>
 			</div>
