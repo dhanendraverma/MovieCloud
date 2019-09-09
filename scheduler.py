@@ -17,16 +17,16 @@ global val
 val=0
 
 def update_word_cloud():
-    global val
+    global max_id
     print("hiiiii")
     val=val+1
     func_twitter()
-    if(val==2):
+    if(val==3):
         schedule.clear()
 
 #schedule.every(6).hours.do(update_word_cloud) 
 
-schedule.every(1).minutes.do(update_word_cloud) 
+schedule.every(3).minutes.do(update_word_cloud) 
 
 # Loop so that the scheduling task 
 # keeps on running all time. 
@@ -36,7 +36,7 @@ while True:
     # is pending to run or not 
     schedule.run_pending() 
     time.sleep(1)
-    if(val==2):
+    if(val==3):
         break
     
 
