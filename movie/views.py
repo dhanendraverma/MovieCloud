@@ -48,7 +48,12 @@ def handle(request,**kwargs):
     file_path = "/home/venkatesh/Desktop/MovieCloud/media/Excel/#"+value+".xlsx"
 
     mov = pd.read_excel(file_path)
+    total = len(mov)
+    pos = mov[mov.Positive!=0].Positive.count()
+    #pos = mov.Positive.mean()*100
+    #neg = mov.Negitive.mean()*100
+    neg = mov[mov.Negitive!=0].Negitive.count()
     print(mov.head())
-    context = {'movie':movie_object}
+    context = {'movie':movie_object,'pos':(pos/total)*100,'neg':(neg/total)*100}
     print(context)
     return render(request, 'movie/report.html', context)
