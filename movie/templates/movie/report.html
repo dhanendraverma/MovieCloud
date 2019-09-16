@@ -2,6 +2,9 @@
 
 {% block content %}
 <!-- wordcloud modal -->
+<link rel="stylesheet" type="text/css" href="../../static/movie/style.css">
+<link rel="stylesheet" type="text/css" href="../../static/movie/popup.css">
+
 <div id="modal-container">
 	<div class="modal-background">
     <div class="modal">
@@ -14,9 +17,41 @@
   </div>
 </div>
 <br><br><br>
-<div style="background-color: #BDBDBD;height:500px;width:900px;">
+<div style="background-color: #BDBDBD;height:500px;width:500px;float:left ; margin:10px">
+<img src = "{{movie.poster.url}}" class="card-img-top" alt="{{ movie.movie_name }} poster">
+</div>
+
+
+<div style="height:300px;width:600px; float:right ; margin:10px">
+<div style ="margin:10px;padding-left: 50px;float:right" class="box">
+<a href="#popup1/{{ id }}" class="button">Random tweets</a>
+</div>
+<div id="popup1/3" class="overlay" >
+	<div class="popup" style="height:500px;width:700px;">
+		<h2>Tweeeeet</h2>
+		<a class="close" href="#">&times;</a>
+		<div id="tweet" tweetID="{{ tweet_id }}"></div>
+		{{ tweet_id }}
+		hiiii
+		{{ id }}
+		<!--<a href='/movie/show_{{ movie.movie_name|slice:"1:"}}/1/' class="button">Next tweet</a>!-->
+
+		<button onClick='location.href=&quot;/movie/show_{{ movie.movie_name|slice:"1:"}}/#popup1/1/&quot;'>Next tweet</button>
+
+	</div>
+
+<!--<a href="#popup1" class="button">Next tweets</a>!-->
+
+</div>
+
+<div style ="margin:10px; padding-top: 200px">
 <canvas id="myChart"></canvas>
 </div>
+
+<script sync src="https://platform.twitter.com/widgets.js"></script>
+
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script>
 var ctx = document.getElementById('myChart').getContext('2d');
@@ -41,6 +76,31 @@ var chart = new Chart(ctx, {
 
 </script>
 
+
 <!-- end of modal -->
 <!-- enf of card -->
+<script>
+
+  window.onload = (function(){
+
+    var tweet = document.getElementById("tweet");
+    var id = tweet.getAttribute("tweetID");
+
+    twttr.widgets.createTweet(
+      id, tweet,
+      {
+        conversation : 'none',    // or all
+        cards        : 'hidden',  // or visible
+        linkColor    : '#cc0000', // default is blue
+        theme        : 'light'    // or dark
+      })
+    .then (function (el) {
+      el.contentDocument.querySelector(".footer").style.display = "none";
+    });
+
+  });
+
+</script>
+
+
 {% endblock %}

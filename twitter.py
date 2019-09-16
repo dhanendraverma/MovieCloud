@@ -27,31 +27,31 @@ from movie.models import *
 
 
 def Sentiment_analysis(temp , var):
-    
+
     sid = SentimentIntensityAnalyzer()
-    
+
     #temp = '''Ponle Ilagyna Upayogapaduthundhi 🤙🏽#Manmadhudu2 https://t.co/QgfO1MKBGM '''
     #temp = "Surya is best"
 
     #temp = "<<UNK>>".join(word_cloud.Tweet.values)
     #print(temp)
-        
+
     #print("***********************************************")
     temp = re.sub("RT ","",temp)
     temp = re.sub("(#[\d\w]+)|@[\d\w]+","",temp)
     temp = re.sub("https.*\s","",temp)
 
     temp = re.sub('[!"#$%&\'()*+,-/:;<=>?@[\\]^_`{|}~]',"",temp)
-                        
+
     temp = re.sub('[^a-zA-Z0-9\s.]+',"",temp)
     #print("****")
     #print(temp)
-    
+
         #temp = temp.replace("\n","!")
     score = sid.polarity_scores(temp)
-    
+
     #print(score)
-    
+
     return score[var]
 
 
@@ -59,19 +59,19 @@ def Sentiment_analysis(temp , var):
 
 stopwords = set(stopwords.words('english'))
 def pre_processing(sentence):
-    
+
     sentence = re.sub("RT ","",sentence)
     sentence = re.sub("(#[\d\w]+)|@[\d\w]+","",sentence)
     sentence = re.sub("https.*\s","",sentence)
     #sentence = re.sub('[^a-zA-Z0-9\s.]+',"$",sentence)
 
-    
+
     lemmatizer = WordNetLemmatizer()
     sentence = sentence.lower()
     #sentence = re.sub("\d+"," ",sentence)
     sentence = re.sub('[!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~]'," ",sentence)
-                        
-    
+
+
     stem = ""
     Actual_Words = ["JJ","JJR","JJS",]#\
                     #"RB","RBR","RBS"\
@@ -82,7 +82,7 @@ def pre_processing(sentence):
     #Total_Words = nltk.pos_tag(nltk.word_tokenize(sentence))
     #print(nltk.word_tokenize(sentence))
     #random.shuffle(Total_Words)
-    
+
 
     #print("----",)
     #print(nltk.pos_tag(nltk.word_tokenize(sentence)))
@@ -94,7 +94,7 @@ def pre_processing(sentence):
 
     for i in stem.split():
         Total_Words.append(nltk.pos_tag([i])[0])
-        
+
     #print(Total_Words)
 
     Final_Words = [word[0] for word in Total_Words if word[1] in Actual_Words]
@@ -201,19 +201,19 @@ class Twitter():
 
 #print(item.get_token())
 def func_twitter():
-    metro_polices = ["#Saaho"]
+    metro_polices = ["#GangLeader"]
     from pprint import pprint
     #[pprint(item["text"]) for item in police["statuses"]]
-    
+
 
     public_requests_police = pd.DataFrame()
     for index,search_query in enumerate(metro_polices):
         item = Twitter()
         item.get_token()
-        
+
         if(not path.exists('media/Excel/'+str(search_query)+'.xlsx')):
                            print("Nothing")
-                           
+
                            #created object
                            parameter = {
                            'q': search_query,
@@ -224,7 +224,7 @@ def func_twitter():
                            }
         else:
            reading = pd.read_excel("media/Excel/"+search_query+".xlsx",usecols = [5],index = False)
-           
+
            parameter = {
            'max_id' : str(reading.iloc[-1,0]),
            'q': search_query,
@@ -235,21 +235,21 @@ def func_twitter():
            }
            print("max____ID: ",parameter['max_id'])
 
-            
-                           
+
+
         rows_count = 0
         rows = []
-        while(rows_count<=500):
+        while(rows_count<=3000):
             #total_count+=1
             print("search_params : ",parameter)
-    
+
             police = item.search_request(search_query, search_params = parameter).json()
-    
+
             count = 1
             #pprint(police)
-            
+
             for user in police["statuses"]:
-            
+
                 #print("*****************")
                 #print("User Description : "+user["user"]["description"])
                 #print("User Name : "+user["user"]["name"])
@@ -259,9 +259,9 @@ def func_twitter():
                 #print("Link to tweet : https://twitter.com/statuses/"+user["id_str"])
                 #print("*****************----",count)
                 count+=1
-    
-    
-    
+
+
+
                 if "retweeted_status" in user:
                     is_retweeted = "yes"
                     who_retweeted = user["retweeted_status"]["user"]["screen_name"]
@@ -269,12 +269,12 @@ def func_twitter():
                 else:
                     is_retweeted = "no"
                     who_retweeted = "NA"
-                if check_good_or_not(user["full_text"])==0:    
+                if check_good_or_not(user["full_text"])==0:
                     continue
-                
+
                 rows_count = rows_count+1
-                
-                
+
+
                 rows.append([user["user"]["name"],user["user"]["screen_name"],user["user"]["location"],user["user"]["description"],user["id_str"]\
                 ,user["full_text"],user["in_reply_to_screen_name"],str(get_mentioned_urls(user)),user["lang"],"https://twitter.com/statuses/"+user["id_str"],is_retweeted,who_retweeted\
                 ,str(get_hashtags(user)),str(get_user_mentions(user)), get_date_format(user["created_at"]), get_time_format(user["created_at"]) , user["user"]["verified"]  ])
@@ -287,7 +287,7 @@ def func_twitter():
             next = police["search_metadata"]["next_results"]
             #print(next)
             #print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",)
-    
+
             new_params = {item.split('=')[0]:item.split('=')[1] for item in next[1:].split('&')}
             #parameter[""]= police["search_metadata"]["next_results"]
             parameter.update(new_params)
@@ -302,7 +302,7 @@ def func_twitter():
         #print(rows)
         #print("these are tweets:::",tweets)
         public_requests_police = public_requests_police.append(tweets,ignore_index = True)
-        
+
         tweets['Positive'] = tweets['Tweet'].apply((lambda x:Sentiment_analysis(x,'pos')))
         tweets['Negitive'] = tweets['Tweet'].apply((lambda x:Sentiment_analysis(x,'neg')))
         if(path.exists('media/Excel/'+str(search_query)+'.xlsx')):
@@ -310,40 +310,40 @@ def func_twitter():
             new_updated_df.append(tweets,ignore_index = True)
             new_updated_df.to_excel("media/Excel/"+search_query+".xlsx")
 
-            
+
         else:
             tweets.to_excel("media/Excel/"+search_query+".xlsx")
-        
-        
-        
+
+
+
         #pprint(police)
     #public_requests_police.to_excel("public_requests_police.xlsx")
-    
+
     print("---------------------------------------------------------------------")
-    
+
     for i in metro_polices:
         word_cloud = pd.read_excel("media/Excel/"+i+".xlsx",columns = ["Tweet"])
 
 
         #temp = "".join(word_cloud.Tweet.values)
-        
+
         temp = word_cloud.Tweet.to_string()
         '''
         print(temp)
-        
+
         print("***********************************************")
         temp = re.sub("RT ","",temp)
         temp = re.sub("(#[\d\w]+)|@[\d\w]+","",temp)
         temp = re.sub("https.*\s","",temp)
 
         temp = re.sub('[!"#$%&\'()*+,-/:;<=>?@[\\]^_`{|}~]',"",temp)
-                        
+
         temp = re.sub('[^a-zA-Z0-9\s.]+',"$",temp)
-        
+
         #temp = temp.replace("\n","!")
 
         print(temp)
-        
+
         print(type(temp))
         print(len(temp))
         '''
@@ -354,25 +354,25 @@ def func_twitter():
         wordcloud = WordCloud(width = 800, height = 800,
                     background_color ='white',
                     min_font_size = 10).generate(processed_temp)
-        
-    
+
+
         # plot the WordCloud image
         plt.figure(figsize = (8, 8), facecolor = None)
         plt.imshow(wordcloud)
         plt.axis("off")
         plt.tight_layout(pad = 0)
         plt.savefig("media/image/"+i+".jpg")
-        
+
         id = 'some identifier'
         person, created = Movie.objects.get_or_create(movie_name=i)
 
         if created:
             instance = Movie.objects.get(movie_name = i)
             instance.delete()
-            Movie.objects.create(movie_name=i , poster = "image/"+i+".jpg", 
-                                 word_cloud = "image/"+i+".jpg" , 
+            Movie.objects.create(movie_name=i , poster = "image/"+i+".jpg",
+                                 word_cloud = "image/"+i+".jpg" ,
                                  last_updated =datetime.now() ).save()
-  
+
             print("8888888888888888888888888888888888888888888888888888888888888888")
             print("inside if")
             # means you have created a new person
@@ -384,15 +384,15 @@ def func_twitter():
             print("8888888888888888888888888888888888888888888888888888888888888888")
             print("inside else")
             # person just refers to the existing one
-        
-            
+
+
         plt.show()
         print(wordcloud.process_text(processed_temp))
-        
+
         for i in Movie.objects.all():
             print(i.movie_name,i.last_updated,i.word_cloud)
-        
+
         max_id = parameter['max_id']
 
-func_twitter()        
-#Sentiment_analysis()        
+func_twitter()
+#Sentiment_analysis()
