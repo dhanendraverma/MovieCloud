@@ -4,4 +4,4 @@ from . import models
 class movieForm(forms.ModelForm):
 	class Meta:
 		model =  models.Movie
-		fields = 'nond
+		fields = __all__
